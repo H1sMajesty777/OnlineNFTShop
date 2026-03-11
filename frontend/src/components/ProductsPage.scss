@@ -1,0 +1,423 @@
+// Цветовая схема - Light & Professional
+$primary: #0a0a0a;
+$secondary: #4b5563;
+$accent: #2962ff;
+$accent-light: #768fff;
+$accent-soft: #e8ecff;
+
+$bg-main: #f8fafc;
+$bg-card: #ffffff;
+$bg-hover: #f1f5f9;
+
+$text-primary: #0f172a;
+$text-secondary: #475569;
+$text-tertiary: #64748b;
+
+$border-light: #e2e8f0;
+$border-focus: #94a3b8;
+
+$success: #10b981;
+$success-bg: #e0f2e6;
+$danger: #ef4444;
+$danger-bg: #fee2e2;
+$warning: #f59e0b;
+$warning-bg: #fef3c7;
+
+// Миксины
+@mixin card {
+  background: $bg-card;
+  border: 1px solid $border-light;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+    border-color: $border-focus;
+  }
+}
+
+@mixin button-base {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  background: transparent;
+  color: $text-secondary;
+  
+  &:hover {
+    background: $bg-hover;
+    color: $text-primary;
+  }
+}
+
+// Базовые стили
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: $bg-main;
+  color: $text-primary;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Лейаут
+.shop {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+
+  &__header {
+    @include card;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: $text-primary;
+      letter-spacing: -0.01em;
+    }
+  }
+
+  &__main {
+    min-height: 400px;
+  }
+}
+
+// Сетка
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+// Карточка товара
+.product-card {
+  @include card;
+  overflow: hidden;
+
+  &__image {
+    width: 100%;
+    height: 200px;
+    background: $bg-hover;
+    position: relative;
+    border-bottom: 1px solid $border-light;
+    
+    &--placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $text-tertiary;
+      font-size: 32px;
+    }
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    padding: 20px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 16px;
+    color: $text-primary;
+    line-height: 1.4;
+  }
+
+  &__category {
+    font-size: 13px;
+    color: $text-tertiary;
+    background: $bg-hover;
+    padding: 2px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  &__description {
+    font-size: 14px;
+    color: $text-secondary;
+    margin: 12px 0 16px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid $border-light;
+  }
+
+  &__price {
+    font-weight: 600;
+    font-size: 20px;
+    color: $text-primary;
+    
+    &::after {
+      content: '₽';
+      font-size: 14px;
+      color: $text-tertiary;
+      margin-left: 2px;
+      font-weight: 400;
+    }
+  }
+
+  &__stock {
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: $success-bg;
+    color: $success;
+    
+    &.low-stock {
+      background: $warning-bg;
+      color: $warning;
+    }
+    
+    &.out-of-stock {
+      background: $danger-bg;
+      color: $danger;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    
+    button {
+      flex: 1;
+    }
+  }
+}
+
+// Кнопки
+.btn {
+  @include button-base;
+  
+  &--primary {
+    background: $accent;
+    color: white;
+    
+    &:hover {
+      background: darken($accent, 5%);
+      color: white;
+    }
+  }
+  
+  &--edit {
+    border: 1px solid $border-light;
+    
+    &:hover {
+      border-color: $border-focus;
+    }
+  }
+  
+  &--delete {
+    color: $danger;
+    
+    &:hover {
+      background: $danger-bg;
+      color: $danger;
+      border-color: transparent;
+    }
+  }
+}
+
+// Модальное окно
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+
+  &__content {
+    background: $bg-card;
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    animation: modalSlide 0.2s ease;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: 24px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    input, textarea {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid $border-light;
+      background: $bg-card;
+      font-size: 14px;
+      color: $text-primary;
+      transition: all 0.15s;
+      font-family: inherit;
+
+      &:focus {
+        outline: none;
+        border-color: $accent;
+        box-shadow: 0 0 0 3px rgba($accent, 0.1);
+      }
+
+      &::placeholder {
+        color: $text-tertiary;
+      }
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid $border-light;
+
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      
+      &:first-child {
+        background: transparent;
+        border: 1px solid $border-light;
+        
+        &:hover {
+          background: $bg-hover;
+          border-color: $border-focus;
+        }
+      }
+      
+      &:last-child {
+        background: $accent;
+        color: white;
+        
+        &:hover {
+          background: darken($accent, 5%);
+        }
+      }
+    }
+  }
+}
+
+// Состояния
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: $text-tertiary;
+  
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 12px;
+    border: 2px solid $border-light;
+    border-top-color: $accent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px;
+  color: $text-tertiary;
+  background: $bg-card;
+  border-radius: 16px;
+  border: 1px dashed $border-light;
+}
+
+// Анимации
+@keyframes modalSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Адаптив
+@media (max-width: 768px) {
+  .shop {
+    padding: 16px;
+
+    &__header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+      
+      h1 {
+        text-align: center;
+      }
+    }
+  }
+
+  .product-card {
+    &__footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
+}
