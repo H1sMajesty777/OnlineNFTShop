@@ -1,59 +1,5 @@
-// Цветовая схема - Light & Professional
-$primary: #0a0a0a;
-$secondary: #4b5563;
-$accent: #2962ff;
-$accent-light: #768fff;
-$accent-soft: #e8ecff;
+@import '../styles/variables';
 
-$bg-main: #f8fafc;
-$bg-card: #ffffff;
-$bg-hover: #f1f5f9;
-
-$text-primary: #0f172a;
-$text-secondary: #475569;
-$text-tertiary: #64748b;
-
-$border-light: #e2e8f0;
-$border-focus: #94a3b8;
-
-$success: #10b981;
-$success-bg: #e0f2e6;
-$danger: #ef4444;
-$danger-bg: #fee2e2;
-$warning: #f59e0b;
-$warning-bg: #fef3c7;
-
-// Миксины
-@mixin card {
-  background: $bg-card;
-  border: 1px solid $border-light;
-  border-radius: 16px;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
-    border-color: $border-focus;
-  }
-}
-
-@mixin button-base {
-  padding: 8px 16px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  border: 1px solid transparent;
-  background: transparent;
-  color: $text-secondary;
-  
-  &:hover {
-    background: $bg-hover;
-    color: $text-primary;
-  }
-}
-
-// Базовые стили
 * {
   margin: 0;
   padding: 0;
@@ -68,7 +14,71 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-// Лейаут
+// Навбар
+.navbar {
+  background: $bg-card;
+  border-bottom: 1px solid $border-light;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+
+  &__logo {
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-primary;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid $border-light;
+  }
+
+  &__user-info {
+    font-size: 13px;
+    color: $text-tertiary;
+    
+    strong {
+      color: $text-primary;
+      font-weight: 500;
+    }
+  }
+
+  &__role-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: $accent-soft;
+    color: $accent;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}
+
+// Основной контент
 .shop {
   max-width: 1200px;
   margin: 0 auto;
@@ -95,7 +105,7 @@ body {
   }
 }
 
-// Сетка
+// Сетка товаров
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -106,6 +116,8 @@ body {
 .product-card {
   @include card;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   &__image {
     width: 100%;
@@ -133,6 +145,9 @@ body {
 
   &__content {
     padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   &__header {
@@ -140,6 +155,7 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 8px;
+    gap: 8px;
   }
 
   &__title {
@@ -150,12 +166,13 @@ body {
   }
 
   &__category {
-    font-size: 13px;
+    font-size: 12px;
     color: $text-tertiary;
     background: $bg-hover;
     padding: 2px 10px;
     border-radius: 100px;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   &__description {
@@ -173,7 +190,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 16px;
+    margin-top: auto;
     padding-top: 16px;
     border-top: 1px solid $border-light;
   }
@@ -193,7 +210,7 @@ body {
   }
 
   &__stock {
-    font-size: 13px;
+    font-size: 12px;
     padding: 4px 10px;
     border-radius: 100px;
     background: $success-bg;
@@ -235,7 +252,7 @@ body {
     }
   }
   
-  &--edit {
+  &--secondary {
     border: 1px solid $border-light;
     
     &:hover {
@@ -243,13 +260,21 @@ body {
     }
   }
   
-  &--delete {
+  &--danger {
     color: $danger;
     
     &:hover {
       background: $danger-bg;
       color: $danger;
       border-color: transparent;
+    }
+  }
+  
+  &--outline {
+    border: 1px solid $border-light;
+    
+    &:hover {
+      background: $bg-hover;
     }
   }
 }
@@ -291,30 +316,17 @@ body {
       gap: 16px;
     }
 
-    input, textarea {
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid $border-light;
-      background: $bg-card;
-      font-size: 14px;
-      color: $text-primary;
-      transition: all 0.15s;
-      font-family: inherit;
-
-      &:focus {
-        outline: none;
-        border-color: $accent;
-        box-shadow: 0 0 0 3px rgba($accent, 0.1);
-      }
-
-      &::placeholder {
-        color: $text-tertiary;
-      }
+    input, textarea, select {
+      @include input-base;
     }
 
     textarea {
       min-height: 100px;
       resize: vertical;
+    }
+
+    select {
+      cursor: pointer;
     }
   }
 
@@ -353,11 +365,13 @@ body {
 }
 
 // Состояния
-.loading {
+.loading, .empty-state {
   text-align: center;
   padding: 60px;
   color: $text-tertiary;
-  
+}
+
+.loading {
   &::after {
     content: '';
     display: inline-block;
@@ -373,9 +387,6 @@ body {
 }
 
 .empty-state {
-  text-align: center;
-  padding: 60px;
-  color: $text-tertiary;
   background: $bg-card;
   border-radius: 16px;
   border: 1px dashed $border-light;
@@ -399,6 +410,21 @@ body {
 
 // Адаптив
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+
+    &__inner {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 12px 0;
+      gap: 12px;
+    }
+
+    &__nav {
+      flex-wrap: wrap;
+    }
+  }
+
   .shop {
     padding: 16px;
 
@@ -413,11 +439,13 @@ body {
     }
   }
 
-  .product-card {
-    &__footer {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-    }
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
